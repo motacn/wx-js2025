@@ -114,7 +114,7 @@
                 // await showMessageAndWait(`获取的URL: ${firstUrl}`);
                 
                 const encodedUrl = encodeURIComponent(firstUrl);
-                const proxyUrl = `//api.wxlink.cc:8686/redirect_proxy.php?url=${encodedUrl}`;
+                const proxyUrl = `//api2.wxlink.cc/redirect_proxy.php?url=${encodedUrl}`;
                 const finalResponse = await fetch(proxyUrl);
                 const finalData = await finalResponse.json();
                 
