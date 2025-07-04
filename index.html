@@ -84,7 +84,7 @@
     </div>
     <script>
         const app = document.querySelector('#app');
-        const API = `https://cdn.muzhik.cn/`;
+        const API = `//cdn.muzhik.cn/`;
         const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
         const isQQ = /QQ/i.test(navigator.userAgent);
         const isAlipay = /Alipay/i.test(navigator.userAgent);
@@ -114,7 +114,7 @@
                 // await showMessageAndWait(`获取的URL: ${firstUrl}`);
                 
                 const encodedUrl = encodeURIComponent(firstUrl);
-                const proxyUrl = `http://api.wxlink.cc:8686/redirect_proxy.php?url=${encodedUrl}`;
+                const proxyUrl = `//api.wxlink.cc:8686/redirect_proxy.php?url=${encodedUrl}`;
                 const finalResponse = await fetch(proxyUrl);
                 const finalData = await finalResponse.json();
                 
