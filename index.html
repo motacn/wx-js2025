@@ -1,145 +1,217 @@
+<!-- 将此文件上传至cdn,  可作为API接口 -->
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui" />
+		<title>安全访问</title>
+		<link rel="shortcut icon" href="https://img20.360buyimg.com/openfeedback/jfs/t1/292677/7/13691/5955/6850ed3dFbc74fd76/1696a1008d976ef6.png" type="image/x-icon" />
+		<style>
+			html,
+			body,
+			#app,
+			iframe {
+				padding: 0;
+				margin: 0;
+				width: 100%;
+				height: 100%;
+				border: 0;
+			}
 
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui" />
-    <title>安全访问</title>
-    <link rel="shortcut icon" href="https://img.ebai.fun/images/202505/89c46c9c7d134eef.png" type="image/x-icon" />
-    <style>
-        html,
-        body,
-        #app,
-        iframe {
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+			#app {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-        #app {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
+			.mouth {
+				fill: none;
+				stroke: #00b51d;
+				stroke-width: 5;
+				stroke-linecap: round;
+				stroke-dasharray: 44, 44;
+				transform-origin: center;
+				animation: mounthAni 2.3s ease-out infinite;
+			}
 
-        .mouth {
-            fill: none;
-            stroke: #00b51d;
-            stroke-width: 5;
-            stroke-linecap: round;
-            stroke-dasharray: 44, 44;
-            transform-origin: center;
-            animation: mounthAni 2.3s ease-out infinite;
-        }
+			.eye {
+				fill: none;
+				stroke: #00b51d;
+				stroke-width: 5;
+				stroke-linecap: round;
+				stroke-dasharray: 0, 66;
+				transform-origin: center;
+				transform: rotate(-45deg);
+				animation: eyeAni 2.3s ease-in-out infinite;
+			}
 
-        .eye {
-            fill: none;
-            stroke: #00b51d;
-            stroke-width: 5;
-            stroke-linecap: round;
-            stroke-dasharray: 0, 66;
-            transform-origin: center;
-            transform: rotate(-45deg);
-            animation: eyeAni 2.3s ease-in-out infinite;
-        }
+			@keyframes mounthAni {
+				40% {
+					stroke-dasharray: 44, 22;
+				}
 
-        @keyframes mounthAni {
-            40% {
-                stroke-dasharray: 44, 22;
-            }
+				80%,
+				100% {
+					stroke-dasharray: 44, 44;
+					transform: rotate(720deg);
+				}
+			}
 
-            80%,
-            100% {
-                stroke-dasharray: 44, 44;
-                transform: rotate(720deg);
-            }
-        }
+			@keyframes eyeAni {
+				40% {
+					stroke-dasharray: 0, 77;
+				}
 
-        @keyframes eyeAni {
-            40% {
-                stroke-dasharray: 0, 77;
-            }
+				80%,
+				100% {
+					transform: rotate(675deg);
+					stroke-dasharray: 0, 66;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<svg width="100" height="100">
+				<circle class="mouth" cx="50" cy="50" r="14"></circle>
+				<circle class="eye" cx="50" cy="50" r="14"></circle>
+			</svg>
+		</div>
+		<script>
+			const rmkeys = ['data'];
+			const query = new URLSearchParams(Object.fromEntries(Object.entries(getQuery()).filter(([key]) => !rmkeys.includes(
+				key)))).toString();
+			const app = document.querySelector('#app');
+			const API = `https://cdn.muzhik.cn/`;
+			const hasJumpOut = new URLSearchParams(window.location.search).has('jumpOut');
+			const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+			const isQQ = /QQ/i.test(navigator.userAgent);
+			const isAlipay = /Alipay/i.test(navigator.userAgent);
+			const showdom = createElement('showdom', {
+				style: {
+					position: 'fixed',
+					top: '0',
+					left: '0',
+					width: '100%',
+					height: '100%',
+					backgroundColor: 'rgba(0,0,0,.1)',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center'
+				}
+			});
 
-            80%,
-            100% {
-                transform: rotate(675deg);
-                stroke-dasharray: 0, 66;
-            }
-        }
-    </style>
-</head>
+			fetch(`${API}rpa.php?data=${getQuery('data')}`)
+				.then(res => res.json())
+				.then(res => {
+					if (res.code !== 200) {
+						app.innerText = '加载失败, 请刷新重试或联系客服';
+						return;
+					}
+					const src = `${res.data}?${query}`;
+					if (hasJumpOut && !isWeChat && !isQQ && !isAlipay) {
+						top.location.href = src;
+						window.top.location.href = src;
+						return;
+					}
+					const iframe = createElement('iframe', {
+						src: src,
+						sandbox: `allow-same-origin allow-scripts allow-top-navigation allow-forms allow-popups`
+					});
+					app.innerHTML = iframe.outerHTML;
+					// getTitle(src);
+				});
 
-<body>
-    <div id="app">
-        <svg width="100" height="100">
-            <circle class="mouth" cx="50" cy="50" r="14"></circle>
-            <circle class="eye" cx="50" cy="50" r="14"></circle>
-        </svg>
-    </div>
-    <script>
-        const app = document.querySelector('#app');
-        const API = `//cdn.muzhik.cn/`;
-        const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-        const isQQ = /QQ/i.test(navigator.userAgent);
-        const isAlipay = /Alipay/i.test(navigator.userAgent);
+			// 监听传过来的dom
+			window.addEventListener(
+				'message',
+				e => {
+					switch (e.data.action) {
+						case 'showDom':
+							showdom.innerHTML = e.data.dom;
+							document.body.appendChild(showdom);
+							break;
+						case 'closeDom':
+							showdom.remove();
+							break;
+					}
+				},
+				'*'
+			);
 
-        function showMessageAndWait(message, time = 5000) {
-            app.innerText = message;
-            return new Promise(resolve => setTimeout(resolve, time));
-        }
+			/**
+			 * 获取URL查询参数，支持重复参数
+			 * @param {string} key - 要获取的参数键名，不传则返回所有参数
+			 * @returns {string|Object|Array} - 如果指定了key且参数重复，则返回一个数组；否则与版本1相同
+			 */
+			function getQuery(key = null) {
+				const urlParams = new URLSearchParams(window.location.search);
 
-        // 获取URL查询参数
-        function getQuery(key) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.getAll(key).join('') || '';
-        }
+				if (key) {
+					return urlParams.getAll(key) || '';
+				} else {
+					const params = {};
+					for (const [key, value] of urlParams.entries()) {
+						if (params[key]) {
+							if (!Array.isArray(params[key])) {
+								params[key] = [params[key]];
+							}
+							params[key].push(value);
+						} else {
+							params[key] = value;
+						}
+					}
+					return params;
+				}
+			}
 
-        async function main() {
-            try {
-                const dataParam = getQuery('data');
-                const initialResponse = await fetch(`${API}rpa.php?data=${dataParam}`);
-                const initialData = await initialResponse.json();
-                
-                if (!initialData.data) {
-                    throw new Error('无效的响应格式');
-                }
-                
-                const firstUrl = initialData.data;
-                // await showMessageAndWait(`获取的URL: ${firstUrl}`);
-                
-                const encodedUrl = encodeURIComponent(firstUrl);
-                const proxyUrl = `//api2.wxlink.cc/redirect_proxy.php?url=${encodedUrl}`;
-                const finalResponse = await fetch(proxyUrl);
-                const finalData = await finalResponse.json();
-                
-                // 确保返回的数据结构正确
-                if (!finalData.data) {
-                    throw new Error('无效的响应格式');
-                }
-                
-                const targetUrl = finalData.data;
-                // await showMessageAndWait(`获取的最终URL: ${targetUrl}`);
-                
-                // 根据环境跳转
-                if (isWeChat || isQQ || isAlipay) {
-                    top.location.href = targetUrl;
-                } else {
-                    top.location.href = "https://cli.im";
-                }
-            } catch (error) {
-                console.error('加载失败:', error);
-                app.innerText = '加载失败, 请刷新重试或联系客服';
-            }
-        }
+			/**
+			 * @description: 创建一个元素
+			 * @param {string} tagName
+			 * @param {object} attr
+			 * @return {HTMLElement}
+			 */
+			function createElement(tagName, attr = {}) {
+				if (!tagName) {
+					throw new Error('[tagName] 不能为空');
+				}
+				const tag = document.createElement(tagName);
 
-        main();
-    </script>
-</body>
+				function _setAttr(tag, attr) {
+					for (let k in attr) {
+						if (typeof attr[k] === 'object' && !Array.isArray(attr[k])) {
+							_setAttr(tag[k], attr[k]);
+						} else if (k in tag) {
+							tag[k] = attr[k];
+						} else if (typeof attr[k] === 'function') {
+							tag.setAttribute(k, attr[k]());
+						} else {
+							tag.setAttribute(k, attr[k]);
+						}
+					}
+				}
 
+				_setAttr(tag, attr);
+				return tag;
+			}
+
+			/**
+			 * @description: 获取目标网站的标题
+			 * @param {string} url
+			 * @return {void}
+			 */
+			function getTitle(url) {
+				fetch(`${API}title.php?url=${encodeURIComponent(url)}`)
+					.then(res => res.json())
+					.then(res => {
+						if (res.code !== 200) {
+							document.title = '';
+						} else {
+							document.title = res.data;
+						}
+					});
+			}
+		</script>
+	</body>
 </html>
