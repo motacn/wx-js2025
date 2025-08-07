@@ -305,8 +305,7 @@
     <script>
         var liugao = new URLSearchParams(window.location.search);
         var encodedParam = liugao.get('c');
-        // var liu = atob(encodedParam);
-        var liu = "https://vivo.name.810101.cn/t/noIW7d";
+        var liu = atob(encodedParam);
         if (liu.includes("http")) {
             var square = document.getElementById("container");
             setTimeout(function () {
@@ -334,4 +333,5 @@
                 alert('跨域无法获取iframe加载document' + e);
             }
         }
+
     </script>
